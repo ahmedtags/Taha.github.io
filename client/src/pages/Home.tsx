@@ -10,10 +10,12 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Courses from "@/components/Courses";
 import Footer from "@/components/Footer";
+import InteractiveBackground from "@/components/InteractiveBackground";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen relative overflow-x-hidden">
+      <InteractiveBackground />
       <Header />
       <Hero />
       <About />

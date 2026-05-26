@@ -1,7 +1,6 @@
 /**
  * Hero Section Component
- * Premium dark design with animated gradient background,
- * floating luminous orbs, staggered text animations, and a typing effect.
+ * Rendered over the global interactive background.
  */
 
 import { useState, useEffect } from "react";
@@ -45,86 +44,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated gradient background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(0.98 0.001 70), oklch(0.96 0.01 60), oklch(0.97 0.005 65))",
-          backgroundSize: "400% 400%",
-          animation: "gradient-shift 12s ease infinite",
-        }}
-      />
-
-      {/* Floating orbs */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Large cyan orb */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: "400px",
-            height: "400px",
-            top: "10%",
-            right: "-5%",
-            background: "radial-gradient(circle, oklch(0.85 0.15 40 / 12%), transparent 70%)",
-            animation: "float 8s ease-in-out infinite",
-          }}
-        />
-        {/* Medium teal orb */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: "300px",
-            height: "300px",
-            bottom: "15%",
-            left: "-3%",
-            background: "radial-gradient(circle, oklch(0.75 0.12 45 / 10%), transparent 70%)",
-            animation: "float 10s ease-in-out infinite",
-            animationDelay: "-3s",
-          }}
-        />
-        {/* Small accent orb */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: "150px",
-            height: "150px",
-            top: "55%",
-            left: "60%",
-            background: "radial-gradient(circle, oklch(0.90 0.10 50 / 8%), transparent 70%)",
-            animation: "float 7s ease-in-out infinite",
-            animationDelay: "-5s",
-          }}
-        />
-        {/* Tiny sparkle dots */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: `${4 + i * 2}px`,
-              height: `${4 + i * 2}px`,
-              top: `${15 + i * 14}%`,
-              left: `${10 + i * 15}%`,
-              background: "oklch(0.85 0.15 40 / 30%)",
-              animation: `float ${5 + i}s ease-in-out infinite`,
-              animationDelay: `${-i * 1.2}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Grid overlay for texture */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(oklch(1 0 0 / 10%) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 10%) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
       {/* Content */}
       <div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
         {/* Greeting badge */}

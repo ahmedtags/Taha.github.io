@@ -111,7 +111,7 @@ export default function Courses() {
   const categoryCount = useCountUp(categories.length);
 
   return (
-    <section id="courses" className="py-24 md:py-36 bg-background relative">
+    <section id="courses" className="py-24 md:py-36 bg-transparent relative">
       {/* Background accent */}
       <div
         className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full pointer-events-none -translate-y-1/2"

@@ -47,10 +47,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative py-20 md:py-28 overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, oklch(0.97 0.005 65), oklch(0.95 0.01 60))",
-      }}
+      className="relative py-20 md:py-28 overflow-hidden bg-transparent"
     >
       {/* Top gradient border */}
       <div

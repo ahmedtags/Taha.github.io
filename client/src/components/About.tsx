@@ -137,7 +137,7 @@ export default function About() {
   const bio = useScrollAnimation();
 
   return (
-    <section id="about" className="py-24 md:py-36 bg-background relative">
+    <section id="about" className="py-24 md:py-36 bg-transparent relative">
       {/* Subtle background accent */}
       <div
         className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none"

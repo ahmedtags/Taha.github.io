@@ -91,7 +91,7 @@ export default function Projects() {
   const header = useScrollAnimation();
 
   return (
-    <section id="projects" className="py-24 md:py-36 bg-background relative">
+    <section id="projects" className="py-24 md:py-36 bg-transparent relative">
       {/* Subtle background accent */}
       <div
         className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none"
