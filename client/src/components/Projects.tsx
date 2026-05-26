@@ -9,15 +9,13 @@ import { Link } from "wouter";
 import { useScrollAnimation } from "@/hooks/useAnimations";
 
 /** Extracted component so useScrollAnimation is called at the component level, not inside a loop */
-function ProjectCard({ project, index, isWide }: { project: Project; index: number; isWide: boolean }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const card = useScrollAnimation(0.15);
 
   return (
     <article
       ref={card.ref}
-      className={`group glass-card gradient-border rounded-xl p-8 md:p-10 relative overflow-hidden ${
-        isWide ? "md:col-span-2" : ""
-      }`}
+      className="group glass-card gradient-border rounded-xl p-8 md:p-10 relative overflow-hidden"
       style={{
         opacity: card.isVisible ? 1 : 0,
         transform: card.isVisible ? "translateY(0)" : "translateY(30px)",
@@ -30,7 +28,7 @@ function ProjectCard({ project, index, isWide }: { project: Project; index: numb
       </span>
 
       {/* Content */}
-      <div className={`relative z-10 ${isWide ? "md:max-w-3xl" : ""}`}>
+      <div className="relative z-10">
         {/* Project Header */}
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-3">
@@ -126,14 +124,11 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {PROJECTS.map((project, index) => {
-            const isWide = index === 0 || index === PROJECTS.length - 1;
-            return (
-              <ProjectCard key={project.id} project={project} index={index} isWide={isWide} />
-            );
-          })}
+        {/* Project Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PROJECTS.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
         </div>
       </div>
     </section>
