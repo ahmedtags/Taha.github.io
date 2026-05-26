@@ -1,47 +1,242 @@
 /**
  * Hero Section Component
- * Personalized for Ahmed Taha - AI & Computer Science Student
+ * Premium dark design with animated gradient background,
+ * floating luminous orbs, staggered text animations, and a typing effect.
  */
 
+import { useState, useEffect } from "react";
+
+const TITLES = [
+  "AI & Computer Science Student",
+  "Software Developer",
+  "Computer Vision Enthusiast",
+  "Full-Stack Builder",
+];
+
 export default function Hero() {
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentTitle = TITLES[titleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && displayText.length < currentTitle.length) {
+      timeout = setTimeout(() => {
+        setDisplayText(currentTitle.slice(0, displayText.length + 1));
+      }, 80);
+    } else if (!isDeleting && displayText.length === currentTitle.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 2000);
+    } else if (isDeleting && displayText.length > 0) {
+      timeout = setTimeout(() => {
+        setDisplayText(currentTitle.slice(0, displayText.length - 1));
+      }, 40);
+    } else if (isDeleting && displayText.length === 0) {
+      setIsDeleting(false);
+      setTitleIndex((prev) => (prev + 1) % TITLES.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, titleIndex]);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage:
-          "url('https://private-us-east-1.manuscdn.com/sessionFile/gLpcwwrzrn2pr5rp77pBEW/sandbox/rtJ4GUfksQBtMarcgm30IB-img-1_1771086798000_na1fn_aGVyby1hYnN0cmFjdC1taW5pbWFs.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZ0xwY3d3cnpybjJwcjVycDc3cEJFVy9zYW5kYm94L3J0SjRHVWZrc1FCdE1hcmNnbTMwSUItaW1nLTFfMTc3MTA4Njc5ODAwMF9uYTFmbl9hR1Z5YnkxaFluTjBjbUZqZEMxdGFXNXBiV0ZzLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=p1nRRw~On2Ss0C7m4fwKAdGRDD0jo2j1kgQSDabbHdu1OQ6w-qYEzLjIzt892SdwKO-pDqJ2To1v-R3N76WTfPBMON1TUl9HWOKlG3FFptqi-Wop9s7zBKIDNsisxvlshIRI22TTor0YOzymfa~Y~Vts94NgOZqeR5cPewZ8Z~cVV83nmFPM8JO9MuQE0jtkij7YWdN61Docw5jH6LomIxBixczA1tTBqJhIWSE63Ydv7lcYqlNpYOISbsgjkTrR7pyVkhCWDGvU2voI6yG51x7dvaK34cb-qgAXgZeQdAVf7YuTBUZ7AaoDV7BvWPIXny-c3QuCp9ZzbnoabGCOhA__')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Overlay for text contrast */}
-      <div className="absolute inset-0 bg-background/40" />
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(0.98 0.001 70), oklch(0.96 0.01 60), oklch(0.97 0.005 65))",
+          backgroundSize: "400% 400%",
+          animation: "gradient-shift 12s ease infinite",
+        }}
+      />
+
+      {/* Floating orbs */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {/* Large cyan orb */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: "400px",
+            height: "400px",
+            top: "10%",
+            right: "-5%",
+            background: "radial-gradient(circle, oklch(0.85 0.15 40 / 12%), transparent 70%)",
+            animation: "float 8s ease-in-out infinite",
+          }}
+        />
+        {/* Medium teal orb */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: "300px",
+            height: "300px",
+            bottom: "15%",
+            left: "-3%",
+            background: "radial-gradient(circle, oklch(0.75 0.12 45 / 10%), transparent 70%)",
+            animation: "float 10s ease-in-out infinite",
+            animationDelay: "-3s",
+          }}
+        />
+        {/* Small accent orb */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: "150px",
+            height: "150px",
+            top: "55%",
+            left: "60%",
+            background: "radial-gradient(circle, oklch(0.90 0.10 50 / 8%), transparent 70%)",
+            animation: "float 7s ease-in-out infinite",
+            animationDelay: "-5s",
+          }}
+        />
+        {/* Tiny sparkle dots */}
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: `${4 + i * 2}px`,
+              height: `${4 + i * 2}px`,
+              top: `${15 + i * 14}%`,
+              left: `${10 + i * 15}%`,
+              background: "oklch(0.85 0.15 40 / 30%)",
+              animation: `float ${5 + i}s ease-in-out infinite`,
+              animationDelay: `${-i * 1.2}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Grid overlay for texture */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(oklch(1 0 0 / 10%) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 10%) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
       {/* Content */}
-      <div className="container relative z-10 text-center max-w-3xl mx-auto px-4">
-        <h1 className="font-display font-bold text-5xl md:text-7xl text-foreground mb-6 tracking-tight">
-          Ahmed Taha
+      <div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
+        {/* Greeting badge */}
+        <div
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-sans font-medium mb-8 glass"
+          style={{
+            opacity: 0,
+            animation: "fade-in-up 0.8s ease-out 0.2s forwards",
+          }}
+        >
+          <span className="w-2 h-2 rounded-full bg-accent animate-glow-pulse" />
+          Available for opportunities
+        </div>
+
+        {/* Name */}
+        <h1
+          className="font-display font-bold text-6xl md:text-8xl text-foreground mb-4 tracking-tight"
+          style={{
+            opacity: 0,
+            animation: "fade-in-up 0.8s ease-out 0.4s forwards",
+          }}
+        >
+          Ahmed{" "}
+          <span
+            className="bg-clip-text text-transparent"
+            style={{
+              backgroundImage: "linear-gradient(135deg, oklch(0.85 0.15 40), oklch(0.70 0.12 50))",
+            }}
+          >
+            Taha
+          </span>
         </h1>
-        <p className="text-2xl md:text-3xl text-accent font-semibold mb-4">
-          AI & Computer Science Student
+
+        {/* Typing subtitle */}
+        <div
+          className="h-10 md:h-12 flex items-center justify-center mb-6"
+          style={{
+            opacity: 0,
+            animation: "fade-in-up 0.8s ease-out 0.6s forwards",
+          }}
+        >
+          <p className="text-xl md:text-2xl font-sans font-medium text-accent">
+            {displayText}
+            <span
+              className="inline-block w-0.5 h-6 md:h-7 bg-accent ml-1 align-middle"
+              style={{ animation: "glow-pulse 1s ease-in-out infinite" }}
+            />
+          </p>
+        </div>
+
+        {/* Description */}
+        <p
+          className="text-lg md:text-xl text-foreground/60 mb-10 leading-relaxed max-w-2xl mx-auto font-sans font-light"
+          style={{
+            opacity: 0,
+            animation: "fade-in-up 0.8s ease-out 0.8s forwards",
+          }}
+        >
+          Computer Science student at Universiti Sains Malaysia specializing in
+          artificial intelligence, software development, and computer vision.
         </p>
-        <p className="text-lg md:text-xl text-foreground/80 mb-8 leading-relaxed max-w-2xl mx-auto">
-          Computer Science student at Universiti Sains Malaysia specializing in 
-          artificial intelligence, software development, and computer vision. 
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a
-            href="#projects"
-            className="inline-block px-8 py-3 bg-accent text-accent-foreground font-sans font-semibold rounded-sm hover:bg-accent/90 transition-colors duration-300"
+
+        {/* CTA Buttons */}
+        <div
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          style={{
+            opacity: 0,
+            animation: "fade-in-up 0.8s ease-out 1.0s forwards",
+          }}
+        >
+          <button
+            onClick={() => scrollToSection("projects")}
+            className="glow-btn inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-sans font-semibold text-accent-foreground transition-all duration-300 hover:scale-[1.03]"
+            style={{
+              background: "linear-gradient(135deg, oklch(0.85 0.15 40), oklch(0.75 0.12 40))",
+            }}
           >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </svg>
             View My Projects
-          </a>
-          <a
-            href="#contact"
-            className="inline-block px-8 py-3 bg-foreground/10 text-foreground font-sans font-semibold rounded-sm hover:bg-foreground/20 transition-colors duration-300"
+          </button>
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-sans font-semibold text-foreground glass hover:border-accent/30 transition-all duration-300 hover:scale-[1.03]"
           >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
             Contact Me
-          </a>
+          </button>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        style={{
+          opacity: 0,
+          animation: "fade-in-up 0.8s ease-out 1.4s forwards",
+        }}
+      >
+        <span className="text-xs font-sans text-foreground/40 uppercase tracking-widest">Scroll</span>
+        <div
+          className="w-5 h-8 rounded-full border-2 border-foreground/20 flex justify-center pt-1.5"
+        >
+          <div
+            className="w-1 h-2 rounded-full bg-accent"
+            style={{ animation: "scroll-indicator 2s ease-in-out infinite" }}
+          />
         </div>
       </div>
     </section>

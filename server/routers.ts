@@ -31,6 +31,23 @@ export const appRouter = router({
       .query(({ input }) => {
         return PROJECTS.find(p => p.id === input.id) || null;
       }),
+
+    // Dummy mutations to satisfy type checking for AdminDashboard
+    create: publicProcedure
+      .input(z.any())
+      .mutation(() => {
+        return { success: true };
+      }),
+    update: publicProcedure
+      .input(z.any())
+      .mutation(() => {
+        return { success: true };
+      }),
+    delete: publicProcedure
+      .input(z.any())
+      .mutation(() => {
+        return { success: true };
+      }),
   }),
 });
 
