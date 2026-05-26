@@ -8,10 +8,18 @@ import Home from "./pages/Home";
 import ProjectDetail from "./pages/ProjectDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 
+const getBaseHref = () => {
+  // If the pathname starts with /Taha.github.io, we are on GitHub Pages
+  if (window.location.pathname.startsWith("/Taha.github.io")) {
+    return "/Taha.github.io";
+  }
+  return "";
+};
+
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
-    <WouterRouter base="/Taha.github.io">
+    <WouterRouter base={getBaseHref()}>
       <Switch>
         <Route path={"/"} component={Home} />
         <Route path={"/project/:id"} component={ProjectDetail} />
