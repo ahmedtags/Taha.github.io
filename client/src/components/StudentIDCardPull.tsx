@@ -55,8 +55,8 @@ export default function StudentIDCardPull({
   // Dynamic 3D Card Rotation based on lateral X motion (pendulum tilt)
   const cardRotateZ = useTransform(dragX, [-200, 0, 200], [-18, 0, 18]);
 
-  // Base resting distance from top anchor to card clip hole (hanging lower at 105px)
-  const BASE_Y = 105;
+  // Base resting distance from top anchor to card clip hole (hanging lower down at 165px)
+  const BASE_Y = 165;
 
   // Exact 1:1 Pixel Bezier Paths connecting Top Anchor (0, 12) directly to Card Hole (dragX, dragY + BASE_Y)
   const leftStrandPath = useTransform([dragX, dragY], ([x, y]: any[]) => {
