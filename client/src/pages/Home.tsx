@@ -59,15 +59,17 @@ export default function Home() {
       {/* ------------------------------------------------------------- */}
       {/* LOCKED STATE SCREEN OVERLAY (Warm Dark Glass Curtain) */}
       {/* ------------------------------------------------------------- */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {!isUnlocked && (
           <motion.div
-            initial={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{
               opacity: 0,
               scale: 1.04,
-              transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+              transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
             }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-30 flex flex-col items-center justify-center p-6 bg-stone-950/90 backdrop-blur-xl pointer-events-none select-none"
           >
             {/* Ambient Warm Gold Target Reticle Grid Behind Hanging Badge */}
@@ -111,14 +113,15 @@ export default function Home() {
       {/* ------------------------------------------------------------- */}
       {/* UNLOCKED MAIN PORTFOLIO CONTENT (Reflows & Slides In as Card Docks) */}
       {/* ------------------------------------------------------------- */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isUnlocked && (
           <motion.div
             initial={{ opacity: 0, x: -40, filter: "blur(16px)" }}
             animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, x: -40, filter: "blur(16px)" }}
             transition={{
-              duration: 0.85,
-              delay: 0.15,
+              duration: 0.75,
+              delay: 0.1,
               ease: [0.16, 1, 0.3, 1],
             }}
             className="relative z-10"
