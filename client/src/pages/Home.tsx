@@ -75,7 +75,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#f59e0b08_1px,transparent_1px),linear-gradient(to_bottom,#f59e0b08_1px,transparent_1px)] bg-[size:32px_32px]" />
 
             {/* Glowing Warm Gold Target Ring Framing Card */}
-            <div className="relative w-80 h-[480px] rounded-3xl border border-amber-500/30 flex items-center justify-center -mt-10">
+            <div className="relative w-80 h-[480px] rounded-3xl border border-amber-500/30 flex items-center justify-center mt-[115px]">
               <div className="absolute -inset-4 rounded-3xl border border-amber-500/15 animate-ping opacity-30 pointer-events-none" />
               
               {/* Corner Warm Gold Target Brackets */}
