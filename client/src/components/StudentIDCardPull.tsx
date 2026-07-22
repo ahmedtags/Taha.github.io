@@ -182,7 +182,7 @@ export default function StudentIDCardPull({
             </svg>
           </div>
 
-          {/* 2D Draggable Physical Student ID Card (With Idle Pendulum Sway Onboarding Cue) */}
+          {/* 2D Draggable Physical Student ID Card (Pure Physics - 0ms Delay) */}
           <motion.div
             drag={true}
             dragConstraints={{ left: -320, right: 320, top: -40, bottom: 260 }}
@@ -196,20 +196,6 @@ export default function StudentIDCardPull({
               marginTop: `${BASE_Y}px`,
               willChange: "transform",
             }}
-            animate={
-              !isDragging && !isScanning
-                ? {
-                    x: [-14, 14, -14],
-                  }
-                : {}
-            }
-            transition={
-              !isDragging
-                ? {
-                    x: { repeat: Infinity, duration: 4.0, ease: "easeInOut" },
-                  }
-                : undefined
-            }
             onDragStart={() => setIsDragging(true)}
             onDragEnd={handleDragEnd}
             whileHover={{ scale: 1.02 }}
@@ -314,7 +300,7 @@ export default function StudentIDCardPull({
                 <div className="w-full flex flex-col items-center space-y-1">
                   <div className="flex items-center text-[10px] text-stone-300 font-mono space-x-1">
                     <ChevronDown className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
-                    <span>{isDragging ? "Move & Pull down to scan..." : "MOVE OR PULL BADGE TO UNLOCK"}</span>
+                    <span>{isDragging ? "Move & Pull down to scan..." : "PULL DOWN BADGE TO UNLOCK"}</span>
                   </div>
 
                   {/* Warm Gold Progress Line */}
