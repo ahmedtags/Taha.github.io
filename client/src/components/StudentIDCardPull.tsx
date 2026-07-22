@@ -119,200 +119,216 @@ export default function StudentIDCardPull({
             </div>
           </div>
 
-          {/* 1:1 Pixel Synchronized SVG Lanyard Rope Layer */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 overflow-visible z-20 pointer-events-none">
-            <svg className="overflow-visible" width="1" height="1">
-              <defs>
-                <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1c1917" />
-                  <stop offset="50%" stopColor="#292524" />
-                  <stop offset="100%" stopColor="#1c1917" />
-                </linearGradient>
-                <linearGradient id="lanyardHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#d97706" stopOpacity="0.9" />
-                </linearGradient>
-              </defs>
-
-              {/* Left Strap Strand - Directly Anchored to Card Clip Hole */}
-              <motion.path
-                d={leftStrandPath}
-                fill="none"
-                stroke="url(#lanyardGrad)"
-                strokeWidth="7"
-                strokeLinecap="round"
-              />
-              <motion.path
-                d={leftStrandPath}
-                fill="none"
-                stroke="url(#lanyardHighlight)"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
-              />
-
-              {/* Right Strap Strand - Directly Anchored to Card Clip Hole */}
-              <motion.path
-                d={rightStrandPath}
-                fill="none"
-                stroke="url(#lanyardGrad)"
-                strokeWidth="7"
-                strokeLinecap="round"
-              />
-              <motion.path
-                d={rightStrandPath}
-                fill="none"
-                stroke="url(#lanyardHighlight)"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
-              />
-
-              {/* Metal Clasp Moving 1:1 with Card Clip Hole */}
-              <motion.g style={{ x: claspTransformX, y: claspTransformY }}>
-                <rect
-                  x="0"
-                  y="0"
-                  width="16"
-                  height="10"
-                  rx="2"
-                  fill="url(#lanyardGrad)"
-                  stroke="#d97706"
-                  strokeWidth="1.5"
-                />
-              </motion.g>
-            </svg>
-          </div>
-
-          {/* 2D Draggable Physical Student ID Card (Pure Physics - 0ms Delay) */}
+          {/* Outer Ambient Pendulum Container (Gentle idle swaying when doing nothing) */}
           <motion.div
-            drag={true}
-            dragConstraints={{ left: -320, right: 320, top: -40, bottom: 260 }}
-            dragElastic={0.15}
-            dragSnapToOrigin={true}
-            dragTransition={{ bounceStiffness: 600, bounceDamping: 35 }}
-            style={{
-              x: dragX,
-              y: dragY,
-              rotate: cardRotateZ,
-              marginTop: `${BASE_Y}px`,
-              willChange: "transform",
-            }}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={handleDragEnd}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98, cursor: "grabbing" }}
-            className="relative z-30 cursor-grab touch-none"
+            animate={
+              !isDragging && !isScanning
+                ? { rotate: [-2, 2, -2] }
+                : { rotate: 0 }
+            }
+            transition={
+              !isDragging && !isScanning
+                ? { repeat: Infinity, duration: 4.8, ease: "easeInOut" }
+                : { duration: 0.1 }
+            }
+            style={{ transformOrigin: "top center" }}
+            className="relative z-30 flex flex-col items-center"
           >
-            {/* Glowing Warm Gold Tension Field on Drag */}
-            <motion.div
-              className="absolute -inset-3 rounded-3xl blur-xl transition-all duration-150 pointer-events-none"
-              style={{
-                background: tensionGlow,
-                opacity: isDragging ? 1 : 0.35,
-              }}
-            />
+            {/* 1:1 Pixel Synchronized SVG Lanyard Rope Layer */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 overflow-visible z-20 pointer-events-none">
+              <svg className="overflow-visible" width="1" height="1">
+                <defs>
+                  <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#1c1917" />
+                    <stop offset="50%" stopColor="#292524" />
+                    <stop offset="100%" stopColor="#1c1917" />
+                  </linearGradient>
+                  <linearGradient id="lanyardHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#d97706" stopOpacity="0.9" />
+                  </linearGradient>
+                </defs>
 
-            {/* Rigid Card Frame Container (Fixed 288px x 410px) */}
-            <div className="relative w-[288px] h-[410px] rounded-2xl bg-gradient-to-b from-stone-900 via-stone-950 to-stone-900 border border-amber-500/40 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_30px_rgba(217,119,6,0.2)] backdrop-blur-xl flex flex-col justify-between overflow-hidden">
-              
-              {/* Metallic Badge Clip Hole at top of Card */}
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-3.5 rounded-full bg-stone-950 border border-stone-700 flex items-center justify-center shadow-inner">
-                <div className="w-5 h-1.5 rounded-full bg-stone-800 border border-amber-600/50" />
-              </div>
-
-              {/* Warm Gold Laser Scanning Beam Sweep Effect */}
-              {isScanning && (
-                <motion.div
-                  initial={{ y: -50, opacity: 1 }}
-                  animate={{ y: 420, opacity: [0, 1, 1, 0] }}
-                  transition={{ duration: 0.55, ease: "easeInOut" }}
-                  className="absolute inset-x-0 h-10 bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-95 blur-xs shadow-[0_0_35px_#f59e0b] z-50 pointer-events-none"
+                {/* Left Strap Strand - Directly Anchored to Card Clip Hole */}
+                <motion.path
+                  d={leftStrandPath}
+                  fill="none"
+                  stroke="url(#lanyardGrad)"
+                  strokeWidth="7"
+                  strokeLinecap="round"
                 />
-              )}
+                <motion.path
+                  d={leftStrandPath}
+                  fill="none"
+                  stroke="url(#lanyardHighlight)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
 
-              {/* Card Header & Smart Chip */}
-              <div className="mt-3 flex items-center justify-between border-b border-stone-800 pb-3">
-                {/* Gold Smart Chip Graphic */}
-                <div className="w-10 h-7 rounded bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600 border border-amber-300/80 p-0.5 shadow flex flex-col justify-between">
-                  <div className="w-full h-px bg-amber-950/60" />
-                  <div className="w-full h-2 border-y border-amber-950/60 flex">
-                    <div className="w-1/2 border-r border-amber-950/60" />
-                  </div>
-                  <div className="w-full h-px bg-amber-950/60" />
-                </div>
+                {/* Right Strap Strand - Directly Anchored to Card Clip Hole */}
+                <motion.path
+                  d={rightStrandPath}
+                  fill="none"
+                  stroke="url(#lanyardGrad)"
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                />
+                <motion.path
+                  d={rightStrandPath}
+                  fill="none"
+                  stroke="url(#lanyardHighlight)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
 
-                {/* Institution Tag & Contactless Icon */}
-                <div className="flex items-center space-x-2 text-stone-400">
-                  <span className="text-[10px] font-mono tracking-widest text-amber-400 font-semibold uppercase">ACADEMIC ID</span>
-                  <div className="relative flex items-center justify-center w-5 h-5">
-                    <Zap className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Photo & Student Details */}
-              <div className="flex flex-col items-center text-center my-auto space-y-3">
-                {/* Hologram Avatar Frame */}
-                <div className="relative group-hover:scale-105 transition-transform duration-300">
-                  <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-300 opacity-80 blur-xs animate-pulse" />
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-amber-400 bg-stone-900 shadow-inner">
-                    <img
-                      src={avatarUrl}
-                      alt={name}
-                      className="w-full h-full object-cover object-center"
-                    />
-                    {/* Hologram Overlay grid lines */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#f59e0b15_1px,transparent_1px),linear-gradient(to_bottom,#f59e0b15_1px,transparent_1px)] bg-[size:6px_6px]" />
-                  </div>
-                  {/* Status Indicator Dot */}
-                  <div className="absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-stone-950 bg-amber-500 flex items-center justify-center shadow-lg">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                  </div>
-                </div>
-
-                {/* Name & Title */}
-                <div>
-                  <h3 className="text-xl font-bold tracking-tight text-white font-mono flex items-center justify-center gap-1.5">
-                    {name}
-                    <Sparkles className="w-4 h-4 text-amber-400" />
-                  </h3>
-                  <p className="text-xs font-semibold text-amber-400 tracking-wide font-sans mt-0.5">{title}</p>
-                  <p className="text-[10px] text-stone-400 font-mono mt-0.5">{department}</p>
-                </div>
-              </div>
-
-              {/* Card Footer: Barcode & Pull Progress */}
-              <div className="pt-3 border-t border-stone-800 flex flex-col items-center space-y-2">
-                {/* Simulated Barcode */}
-                <div className="w-full h-8 bg-stone-950 rounded px-3 py-1 flex items-center justify-between border border-stone-800">
-                  <div className="h-full flex items-center space-x-0.5 opacity-85">
-                    {[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3].map((width, idx) => (
-                      <div
-                        key={idx}
-                        className="h-full bg-stone-300"
-                        style={{ width: `${width * 0.8 + 1}px` }}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-[9px] font-mono text-amber-400 font-bold tracking-tight">{studentId}</span>
-                </div>
-
-                {/* Pull Hint / Drag Progress */}
-                <div className="w-full flex flex-col items-center space-y-1">
-                  <div className="flex items-center text-[10px] text-stone-300 font-mono space-x-1">
-                    <ChevronDown className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
-                    <span>{isDragging ? "Move & Pull down to scan..." : "PULL DOWN BADGE TO UNLOCK"}</span>
-                  </div>
-
-                  {/* Warm Gold Progress Line */}
-                  <div className="w-full h-1 bg-stone-800 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600"
-                      style={{ scaleX: pullProgress, transformOrigin: "left" }}
-                    />
-                  </div>
-                </div>
-              </div>
+                {/* Metal Clasp Moving 1:1 with Card Clip Hole */}
+                <motion.g style={{ x: claspTransformX, y: claspTransformY }}>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="16"
+                    height="10"
+                    rx="2"
+                    fill="url(#lanyardGrad)"
+                    stroke="#d97706"
+                    strokeWidth="1.5"
+                  />
+                </motion.g>
+              </svg>
             </div>
+
+            {/* 2D Draggable Physical Student ID Card (Pure Physics - 0ms Delay on Interaction) */}
+            <motion.div
+              drag={true}
+              dragConstraints={{ left: -320, right: 320, top: -40, bottom: 260 }}
+              dragElastic={0.15}
+              dragSnapToOrigin={true}
+              dragTransition={{ bounceStiffness: 600, bounceDamping: 35 }}
+              style={{
+                x: dragX,
+                y: dragY,
+                rotate: cardRotateZ,
+                marginTop: `${BASE_Y}px`,
+                willChange: "transform",
+              }}
+              onDragStart={() => setIsDragging(true)}
+              onDragEnd={handleDragEnd}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98, cursor: "grabbing" }}
+              className="relative z-30 cursor-grab touch-none"
+            >
+              {/* Glowing Warm Gold Tension Field on Drag */}
+              <motion.div
+                className="absolute -inset-3 rounded-3xl blur-xl transition-all duration-150 pointer-events-none"
+                style={{
+                  background: tensionGlow,
+                  opacity: isDragging ? 1 : 0.35,
+                }}
+              />
+
+              {/* Rigid Card Frame Container (Fixed 288px x 410px) */}
+              <div className="relative w-[288px] h-[410px] rounded-2xl bg-gradient-to-b from-stone-900 via-stone-950 to-stone-900 border border-amber-500/40 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_30px_rgba(217,119,6,0.2)] backdrop-blur-xl flex flex-col justify-between overflow-hidden">
+                
+                {/* Metallic Badge Clip Hole at top of Card */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-3.5 rounded-full bg-stone-950 border border-stone-700 flex items-center justify-center shadow-inner">
+                  <div className="w-5 h-1.5 rounded-full bg-stone-800 border border-amber-600/50" />
+                </div>
+
+                {/* Warm Gold Laser Scanning Beam Sweep Effect */}
+                {isScanning && (
+                  <motion.div
+                    initial={{ y: -50, opacity: 1 }}
+                    animate={{ y: 420, opacity: [0, 1, 1, 0] }}
+                    transition={{ duration: 0.55, ease: "easeInOut" }}
+                    className="absolute inset-x-0 h-10 bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-95 blur-xs shadow-[0_0_35px_#f59e0b] z-50 pointer-events-none"
+                  />
+                )}
+
+                {/* Card Header & Smart Chip */}
+                <div className="mt-3 flex items-center justify-between border-b border-stone-800 pb-3">
+                  {/* Gold Smart Chip Graphic */}
+                  <div className="w-10 h-7 rounded bg-gradient-to-br from-amber-200 via-amber-400 to-amber-600 border border-amber-300/80 p-0.5 shadow flex flex-col justify-between">
+                    <div className="w-full h-px bg-amber-950/60" />
+                    <div className="w-full h-2 border-y border-amber-950/60 flex">
+                      <div className="w-1/2 border-r border-amber-950/60" />
+                    </div>
+                    <div className="w-full h-px bg-amber-950/60" />
+                  </div>
+
+                  {/* Institution Tag & Contactless Icon */}
+                  <div className="flex items-center space-x-2 text-stone-400">
+                    <span className="text-[10px] font-mono tracking-widest text-amber-400 font-semibold uppercase">ACADEMIC ID</span>
+                    <div className="relative flex items-center justify-center w-5 h-5">
+                      <Zap className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Photo & Student Details */}
+                <div className="flex flex-col items-center text-center my-auto space-y-3">
+                  {/* Hologram Avatar Frame */}
+                  <div className="relative group-hover:scale-105 transition-transform duration-300">
+                    <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-300 opacity-80 blur-xs animate-pulse" />
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-amber-400 bg-stone-900 shadow-inner">
+                      <img
+                        src={avatarUrl}
+                        alt={name}
+                        className="w-full h-full object-cover object-center"
+                      />
+                      {/* Hologram Overlay grid lines */}
+                      <div className="absolute inset-0 bg-[linear-gradient(to_right,#f59e0b15_1px,transparent_1px),linear-gradient(to_bottom,#f59e0b15_1px,transparent_1px)] bg-[size:6px_6px]" />
+                    </div>
+                    {/* Status Indicator Dot */}
+                    <div className="absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-stone-950 bg-amber-500 flex items-center justify-center shadow-lg">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                    </div>
+                  </div>
+
+                  {/* Name & Title */}
+                  <div>
+                    <h3 className="text-xl font-bold tracking-tight text-white font-mono flex items-center justify-center gap-1.5">
+                      {name}
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                    </h3>
+                    <p className="text-xs font-semibold text-amber-400 tracking-wide font-sans mt-0.5">{title}</p>
+                    <p className="text-[10px] text-stone-400 font-mono mt-0.5">{department}</p>
+                  </div>
+                </div>
+
+                {/* Card Footer: Barcode & Pull Progress */}
+                <div className="pt-3 border-t border-stone-800 flex flex-col items-center space-y-2">
+                  {/* Simulated Barcode */}
+                  <div className="w-full h-8 bg-stone-950 rounded px-3 py-1 flex items-center justify-between border border-stone-800">
+                    <div className="h-full flex items-center space-x-0.5 opacity-85">
+                      {[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3].map((width, idx) => (
+                        <div
+                          key={idx}
+                          className="h-full bg-stone-300"
+                          style={{ width: `${width * 0.8 + 1}px` }}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-[9px] font-mono text-amber-400 font-bold tracking-tight">{studentId}</span>
+                  </div>
+
+                  {/* Pull Hint / Drag Progress */}
+                  <div className="w-full flex flex-col items-center space-y-1">
+                    <div className="flex items-center text-[10px] text-stone-300 font-mono space-x-1">
+                      <ChevronDown className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
+                      <span>{isDragging ? "Move & Pull down to scan..." : "PULL DOWN BADGE TO UNLOCK"}</span>
+                    </div>
+
+                    {/* Warm Gold Progress Line */}
+                    <div className="w-full h-1 bg-stone-800 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600"
+                        style={{ scaleX: pullProgress, transformOrigin: "left" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       )}
