@@ -36,11 +36,13 @@ export function useScrollAnimation(threshold = 0.15) {
  */
 export function useActiveSection(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState("");
+  const sectionIdsKey = sectionIds.join(",");
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
+    const ids = sectionIdsKey.split(",");
 
-    sectionIds.forEach((id) => {
+    ids.forEach((id) => {
       const element = document.getElementById(id);
       if (!element) return;
 
@@ -50,7 +52,7 @@ export function useActiveSection(sectionIds: string[]) {
             setActiveSection(id);
           }
         },
-        { threshold: 0.3, rootMargin: "-80px 0px -50% 0px" }
+        { threshold: 0.05, rootMargin: "-80px 0px -50% 0px" }
       );
 
       observer.observe(element);
@@ -58,7 +60,7 @@ export function useActiveSection(sectionIds: string[]) {
     });
 
     return () => observers.forEach((obs) => obs.disconnect());
-  }, [sectionIds]);
+  }, [sectionIdsKey]);
 
   return activeSection;
 }

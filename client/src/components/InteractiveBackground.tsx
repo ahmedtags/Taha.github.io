@@ -20,9 +20,9 @@ function InteractiveParticles() {
     let height = (canvas.height = window.innerHeight);
 
     // Dynamic particle count based on screen size (denser but still highly performant)
-    const particleCount = Math.min(80, Math.floor((width * height) / 20000));
-    const connectionDistance = 125;
-    const mouseInfluenceDistance = 190;
+    const particleCount = Math.min(90, Math.floor((width * height) / 18000));
+    const connectionDistance = 140;
+    const mouseInfluenceDistance = 210;
 
     interface Particle {
       x: number;
@@ -37,12 +37,12 @@ function InteractiveParticles() {
 
     // Create particles
     for (let i = 0; i < particleCount; i++) {
-      const radius = Math.random() * 2 + 1;
+      const radius = Math.random() * 2.2 + 1.2;
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35, // Slow gentle drift
-        vy: (Math.random() - 0.5) * 0.35,
+        vx: (Math.random() - 0.5) * 0.4, // Slow gentle drift
+        vy: (Math.random() - 0.5) * 0.4,
         radius: radius,
         baseRadius: radius,
       });
@@ -101,9 +101,9 @@ function InteractiveParticles() {
           if (dist < mouseInfluenceDistance) {
             // Gentle pull towards mouse
             const force = (mouseInfluenceDistance - dist) / mouseInfluenceDistance;
-            p.x += (dx / dist) * force * 0.6;
-            p.y += (dy / dist) * force * 0.6;
-            p.radius = p.baseRadius + force * 1.5; // Grow slightly when near mouse
+            p.x += (dx / dist) * force * 0.7;
+            p.y += (dy / dist) * force * 0.7;
+            p.radius = p.baseRadius + force * 2.0; // Grow slightly when near mouse
           } else {
             p.radius = p.baseRadius;
           }
@@ -112,7 +112,7 @@ function InteractiveParticles() {
         // Draw particle dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(217, 163, 74, 0.4)"; // Soft gold
+        ctx.fillStyle = "rgba(217, 163, 74, 0.65)"; // Soft gold
         ctx.fill();
 
         // Connect particles
@@ -123,12 +123,12 @@ function InteractiveParticles() {
           const dist = Math.hypot(dx, dy);
 
           if (dist < connectionDistance) {
-            const alpha = (1 - dist / connectionDistance) * 0.15;
+            const alpha = (1 - dist / connectionDistance) * 0.28;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(217, 163, 74, ${alpha})`; // Soft gold connection lines
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
@@ -140,12 +140,12 @@ function InteractiveParticles() {
           const dist = Math.hypot(dx, dy);
 
           if (dist < mouseInfluenceDistance) {
-            const alpha = (1 - dist / mouseInfluenceDistance) * 0.18;
+            const alpha = (1 - dist / mouseInfluenceDistance) * 0.35;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.strokeStyle = `rgba(217, 163, 74, ${alpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1.0;
             ctx.stroke();
           }
         }
@@ -164,7 +164,7 @@ function InteractiveParticles() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none w-full h-full z-[-9]" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none w-full h-full z-[1]" />;
 }
 
 export default function InteractiveBackground() {
@@ -187,10 +187,10 @@ export default function InteractiveBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none w-full h-full z-[-10]">
+    <div className="fixed inset-0 pointer-events-none w-full h-full z-0">
       {/* Static subtle background gradient */}
       <div
-        className="fixed inset-0 z-[-11]"
+        className="fixed inset-0 z-[-2]"
         style={{
           background: "linear-gradient(135deg, oklch(0.98 0.001 70), oklch(0.97 0.005 65))",
         }}
@@ -198,10 +198,10 @@ export default function InteractiveBackground() {
 
       {/* Grid overlay for texture */}
       <div
-        className="fixed inset-0 opacity-100 z-[-10]"
+        className="fixed inset-0 opacity-100 z-[-1]"
         style={{
           backgroundImage:
-            "linear-gradient(oklch(0.25 0.01 65 / 3%) 1px, transparent 1px), linear-gradient(90deg, oklch(0.25 0.01 65 / 3%) 1px, transparent 1px)",
+            "linear-gradient(oklch(0.25 0.01 65 / 4%) 1px, transparent 1px), linear-gradient(90deg, oklch(0.25 0.01 65 / 4%) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -209,11 +209,11 @@ export default function InteractiveBackground() {
       {/* Spotlight cursor glow */}
       <div
         ref={spotlightRef}
-        className="fixed rounded-full pointer-events-none opacity-50 transition-transform duration-100 ease-out z-[-10]"
+        className="fixed rounded-full pointer-events-none opacity-60 transition-transform duration-100 ease-out z-[0]"
         style={{
           width: "500px",
           height: "500px",
-          background: "radial-gradient(circle, oklch(0.85 0.15 40 / 7%), transparent 70%)",
+          background: "radial-gradient(circle, oklch(0.85 0.15 40 / 12%), transparent 70%)",
           left: 0,
           top: 0,
           transform: "translate3d(-1000px, -1000px, 0)",
